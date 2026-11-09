@@ -3,6 +3,7 @@ import { app, esc, topbar, toast, go } from '../main.js';
 import { PACKS } from '../../content/index.js';
 import { ACHIEVEMENTS, unlockedCards, nodeState } from '../engine.js';
 import { newProfile, exportProfile, parseImport, requestPersist } from '../store.js';
+import { codeBox } from './feedback.js';
 
 export function profiles(el) {
   const list = Object.values(app.state.profiles);
@@ -121,6 +122,28 @@ export async function settings(el) {
     app.save();
     go('#/profiles');
   });
+}
+
+export function codes(el) {
+  const p = app.profile;
+  let html = `${topbar()}<h1>🎟️ 遊戲兌換碼</h1>
+    <p>每精熟一關（★★）拿到一組兌換碼；隔天複習也答對（★★★）再拿一組加倍的。到遊戲裡的<b>兌換台</b>輸入，就能換獎勵。每組兌換碼在遊戲裡只能用一次。</p>`;
+  let n = 0;
+  for (const pack of PACKS) {
+    for (const sec of pack.sections) {
+      const rows = sec.nodes.flatMap((id) => {
+        const s = nodeState(p, pack.id, id);
+        return [2, 3].filter((star) => s.stars >= star).map((star) => ({ id, star }));
+      });
+      if (!rows.length) continue;
+      n += rows.length;
+      html += `<h2>${esc(sec.title)}</h2><div class="grid2">${rows
+        .map(({ id, star }) => `<div class="card"><b>${id} ${esc(pack.nodes[id].title)}</b> ${'★'.repeat(star)}${codeBox(id, star)}</div>`)
+        .join('')}</div>`;
+    }
+  }
+  if (!n) html += '<div class="card"><p>還沒有兌換碼。去闖關，連續答對 3 題精熟一關就有！</p></div>';
+  el.innerHTML = html;
 }
 
 export function report(el) {

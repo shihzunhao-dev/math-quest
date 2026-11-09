@@ -3,7 +3,9 @@ import { app, esc, topbar, toast } from '../main.js';
 import { PACKS } from '../../content/index.js';
 import { nodeState, isUnlocked, dueReviews } from '../engine.js';
 
-const starHtml = (n) => [1, 2, 3].map((i) => (i <= n ? '★' : '<span class="off">★</span>')).join('');
+const codeCount = (p) => Object.values(p.nodes).reduce((n, s) => n + (s.stars >= 2) + (s.stars >= 3), 0);
+
+const starHtml =(n) => [1, 2, 3].map((i) => (i <= n ? '★' : '<span class="off">★</span>')).join('');
 
 export function render(el) {
   const p = app.profile;
@@ -24,6 +26,7 @@ export function render(el) {
     <button class="action ${pre ? '' : 'hot'}" data-go="#/test/${pack.id}/${pre ? 'post' : 'pre'}">
       <b>🧭 ${pre ? '後測' : '前測'}</b><span class="muted">${pre ? (post ? '再測一次看看進步' : '練習一陣子後來測測看') : '先測一次，找出起點'}</span></button>
     <button class="action" data-go="#/ach"><b>🏅 成就</b><span class="muted">${Object.keys(p.achievements).length} 個已解鎖</span></button>
+    <button class="action" data-go="#/codes"><b>🎟️ 遊戲兌換碼</b><span class="muted">${codeCount(p)} 組可以帶進遊戲</span></button>
     <button class="action" data-go="#/cards"><b>📜 數學史卡片</b><span class="muted">精熟關卡來收集</span></button>
     <button class="action" data-go="#/settings"><b>⚙️ 設定與備份</b><span class="muted">匯出、匯入、換人</span></button>
   </div>`;

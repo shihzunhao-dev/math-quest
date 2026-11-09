@@ -183,7 +183,7 @@ export function ladder({ labL, labF, labH }) {
   return svg(body);
 }
 
-export function walk({ a, b, labA, labB }) {
+export function walk({ a, b, labA, labB, from = '家', to = '學校' }) {
   const O = [0, 0];
   const E = [a, 0];
   const N = [a, b];
@@ -194,7 +194,7 @@ export function walk({ a, b, labA, labB }) {
   body += `<line class="dash" x1="${f(p[0][0])}" y1="${f(p[0][1])}" x2="${f(p[2][0])}" y2="${f(p[2][1])}"/>`;
   body += rightMark(T, E, O, N);
   body += sideLabel(T, O, E, c, labA) + sideLabel(T, E, N, c, labB) + sideLabel(T, O, N, E, '?');
-  body += textAt(p[0][0] - 4, p[0][1] + 16, '家', 'vn') + textAt(p[2][0] + 4, p[2][1] - 14, '學校', 'vn');
+  body += textAt(p[0][0] - 4, p[0][1] + 16, from, 'vn') + textAt(p[2][0] + 4, p[2][1] - 14, to, 'vn');
   return svg(body);
 }
 

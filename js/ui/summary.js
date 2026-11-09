@@ -2,6 +2,7 @@
 import { app, esc, topbar, announce, go } from '../main.js';
 import { getPack } from '../../content/index.js';
 import { finishRound, finishTest, nodeState, isUnlocked, RULES, testNodes } from '../engine.js';
+import { codeBox } from './feedback.js';
 
 export function roundSummary(el, pack, nodeId, results) {
   const p = app.profile;
@@ -16,8 +17,8 @@ export function roundSummary(el, pack, nodeId, results) {
     .join('');
   const status =
     s.stars >= 2
-      ? `<p>🎉 已精熟，拿到 ${'★'.repeat(s.stars)}。${s.stars === 2 ? '明天回來複習，就能拿到第三顆星。' : ''}</p>`
-      : `<p>再<b>連續答對 ${RULES.masterStreak - s.streak} 題</b>就精熟。</p>`;
+      ? `<p>🎉 已精熟，拿到 ${'★'.repeat(s.stars)}。${s.stars === 2 ? '明天回來複習，就能拿到第三顆星和加倍的兌換碼。' : ''}</p>${codeBox(nodeId, 2)}${s.stars >= 3 ? codeBox(nodeId, 3) : ''}`
+      : `<p>再<b>連續答對 ${RULES.masterStreak - s.streak} 題</b>就精熟，精熟就能拿到遊戲兌換碼。</p>`;
   el.innerHTML = `${topbar()}<div class="card">
     <h1>${esc(node.title)}：這一輪答對 ${right}/${results.length}</h1>
     ${status}

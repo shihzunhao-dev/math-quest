@@ -2,6 +2,10 @@
 import { esc } from '../main.js';
 import { renderMath } from '../mathfmt.js';
 import { nodeState } from '../engine.js';
+import { codeFor, REWARD_TEXT } from '../codes.js';
+
+export const codeBox = (nodeId, star) =>
+  `<div class="redeem"><span class="muted">🎟️ 遊戲兌換碼（${REWARD_TEXT[star]}）</span><b class="code">${codeFor(nodeId, star)}</b></div>`;
 
 export function feedbackHtml({ res, correctTex, events, pack, nodeId, p }) {
   const node = pack.nodes[nodeId];
@@ -29,8 +33,12 @@ export function feedbackHtml({ res, correctTex, events, pack, nodeId, p }) {
       ${links ? `<p>看看均一的教學影片（會開新分頁）：</p><ul>${links}</ul>` : node.hint ? `<p>${esc(node.hint)}</p>` : ''}
       ${weak ? `<p>或先回去練習：${weak}</p>` : ''}</div>`;
   }
-  if (events.some((e) => e.type === 'mastered')) html += `<div class="celebrate">🎉 精熟！「${esc(node.title)}」拿到 ★★</div>`;
-  if (events.some((e) => e.type === 'star3')) html += '<div class="celebrate">🌟 三顆星！隔了一段時間還記得，記得很牢。</div>';
+  if (events.some((e) => e.type === 'mastered')) {
+    html += `<div class="celebrate">🎉 精熟！「${esc(node.title)}」拿到 ★★${codeBox(nodeId, 2)}</div>`;
+  }
+  if (events.some((e) => e.type === 'star3')) {
+    html += `<div class="celebrate">🌟 三顆星！隔了一段時間還記得，記得很牢。${codeBox(nodeId, 3)}</div>`;
+  }
   return html;
 }
 

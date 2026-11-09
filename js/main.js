@@ -79,6 +79,8 @@ function route() {
         return pages.settings(el);
       case 'report':
         return pages.report(el);
+      case 'codes':
+        return pages.codes(el);
       default:
         return home.render(el);
     }

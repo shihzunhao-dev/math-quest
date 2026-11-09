@@ -2,6 +2,7 @@
 import t21 from './tpl-21.js';
 import t22 from './tpl-22.js';
 import t23 from './tpl-23.js';
+import tGame from './tpl-game.js';
 import misconceptions from './misconceptions.js';
 import cards from './cards.js';
 
@@ -34,7 +35,7 @@ const nodes = {
 
 for (const [id, n] of Object.entries(nodes)) {
   n.id = id;
-  n.templates = [...t21, ...t22, ...t23].filter((t) => t.node === id);
+  n.templates = [...t21, ...t22, ...t23, ...tGame].filter((t) => t.node === id);
 }
 
 export default {
