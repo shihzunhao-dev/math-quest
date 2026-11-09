@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>題目預覽（開發用）</title>
+  <link rel="stylesheet" href="../css/app.css">
+  <style>.pv { margin-bottom: 16px; } .pv h3 { margin: 0 0 6px; color: var(--muted); font-size: 0.9rem; } .opt.ans { border-color: var(--good); }</style>
+</head>
+<body>
+  <main id="app"></main>
+  <script type="module">
+    import { PACKS } from '../content/index.js';
+    import { generate } from '../js/selfcheck.js';
+    import { renderMath } from '../js/mathfmt.js';
+    const seed = Number(new URLSearchParams(location.search).get('seed') || 7);
+    const only = new URLSearchParams(location.search).get('only');
+    let html = `<h1>題目預覽 seed=${seed}</h1>`;
+    for (const pack of PACKS) for (const node of Object.values(pack.nodes)) for (const t of node.templates) {
+      if (only && !t.id.startsWith(only)) continue;
+      const { q } = generate(t, seed, pack.misconceptions);
+      html += `<div class="card pv"><h3>${t.id}</h3><div class="stem">${renderMath(q.stem)}</div>${q.figure || ''}`;
+      html += q.kind === 'input' ? `<p>答案：${q.answer.tex}</p>` :
+        `<div class="opts">${q.options.map((o) => `<div class="opt ${o.mis ? '' : 'ans'}">${renderMath(o.tex)}<br><small class="muted">${o.mis || '正解'}</small></div>`).join('')}</div>`;
+      html += '</div>';
+    }
+    document.getElementById('app').innerHTML = html;
+  </script>
+</body>
+</html>

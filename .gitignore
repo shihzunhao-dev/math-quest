@@ -1,0 +1,6 @@
+# Private planning notes (mention the student and their workbook) - keep local only
+decisions.md
+progress.md
+docs/
+# test outputs
+tools/*.out.txt

@@ -1,0 +1,17 @@
+{
+  "name": "根號與畢氏闖關",
+  "short_name": "畢氏闖關",
+  "description": "康軒八上第二章：平方根與畢氏定理的闖關練習",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f6fb",
+  "theme_color": "#3546a8",
+  "lang": "zh-Hant",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

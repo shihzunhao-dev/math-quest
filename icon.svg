@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#3546a8"/>
+  <polygon points="120,392 392,392 120,152" fill="#ffd166" stroke="#fff" stroke-width="14" stroke-linejoin="round"/>
+  <polyline points="120,352 160,352 160,392" fill="none" stroke="#3546a8" stroke-width="12"/>
+  <text x="300" y="250" font-family="sans-serif" font-size="120" font-weight="700" fill="#fff" text-anchor="middle">√</text>
+</svg>
